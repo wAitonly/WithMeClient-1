@@ -15,7 +15,7 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        String msg = "{\"content\":\"hello\",\"topic\":\"msg_a\"}";
+        String msg = "{\"content\":\"this msg is client 1 to 2\",\"topic\":\"to_WithMeClient-2\"}";
         ctx.channel().writeAndFlush(msg);
     }
 

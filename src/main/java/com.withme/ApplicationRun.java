@@ -16,7 +16,7 @@ public class ApplicationRun {
         SpringApplication.run(ApplicationRun.class);
         //拿到该客户端应该订阅的所有topic，如何该客户端的好友、群组过多，过多的topic订阅如何处理
         List<String> topicList = new ArrayList<String>(){{
-            add("msg_a");
+            add("to_WithMeClient");
         }};
         //启动消息接收
         MessageReceive.start(topicList);
