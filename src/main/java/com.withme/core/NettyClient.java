@@ -48,8 +48,12 @@ public class NettyClient {
                 .channel(NioSocketChannel.class)
                 .handler(new Initializer());
         //绑定服务器等待直到绑定完成,sync()方法会阻塞直到服务器完成绑定,然后服务器等待通道关闭
-        Optional<ChannelFuture> channelFuture = Optional.ofNullable(bootstrap.connect(serverAddress, serverPort).sync());
-        channelFuture.map(a -> a.isSuccess()?"客户端启动成功":"客户端启动失败")
-                .ifPresent(logger::info);
+        ChannelFuture channelFuture = bootstrap.connect(serverAddress, serverPort).sync();
+        if(channelFuture.isSuccess()){
+            logger.info("客户端启动成功");
+            //初始化单例channel
+            SingleChannel.initSingleChannel(channelFuture.channel());
+            logger.info("channel初始化成功");
+        }
     }
 }

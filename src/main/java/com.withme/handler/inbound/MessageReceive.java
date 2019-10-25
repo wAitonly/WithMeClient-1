@@ -1,5 +1,6 @@
 package com.withme.handler.inbound;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.withme.mq.ConsumerFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * kafka订阅topic消息接收
@@ -30,15 +32,24 @@ public class MessageReceive {
      * @param topicList
      */
     public static void start(List<String> topicList){
-        //kafaka收消息
-        consumer = ConsumerFactory.openConsumer();
-        //订阅topic
-        consumer.subscribe(topicList);
-        for(;;) {
-            records = consumer.poll(Duration.ofSeconds(1));
-            for (ConsumerRecord<String, String> record : records) {
-                logger.info("offset = "+record.offset()+", value = "+record.value());
+        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+                .setNameFormat("MsgReceive-start-thread-%d")
+                .build();
+        ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        singleThreadPool.execute(()-> {
+            //kafaka收消息
+            consumer = ConsumerFactory.openConsumer();
+            //订阅topic
+            consumer.subscribe(topicList);
+            for(;;) {
+                records = consumer.poll(Duration.ofSeconds(1));
+                for (ConsumerRecord<String, String> record : records) {
+                    logger.info("offset = "+record.offset()+", value = "+record.value());
+                }
             }
-        }
+        });
+        logger.info("消息接收开启成功");
     }
 }

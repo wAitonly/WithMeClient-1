@@ -1,10 +1,13 @@
 package com.withme;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.withme.core.SingleChannel;
 import com.withme.handler.inbound.MessageReceive;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * 启动类
@@ -20,5 +23,17 @@ public class ApplicationRun {
         }};
         //启动消息接收
         MessageReceive.start(topicList);
+        //发送消息
+        String msg = "{\"content\":\"this msg is client 1 to 2\",\"topic\":\"to_WithMeClient-2\"}";
+        System.out.println("--"+msg);
+
+        //消息发送线程
+        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+                .setNameFormat("MsgSend-start-thread-%d")
+                .build();
+        ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        singleThreadPool.execute(()-> SingleChannel.getInstance().channel.writeAndFlush(msg));
     }
 }
