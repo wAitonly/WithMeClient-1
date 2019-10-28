@@ -13,12 +13,19 @@ import java.util.List;
  */
 @SpringBootApplication
 public class ApplicationRun {
+    /**
+     * 本客户端订阅的topic
+     * @param args
+     */
+    private static final String topic = "to_WithMeClient";
+
+
     public static void main(String[] args) {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(ApplicationRun.class);
         builder.headless(false).run(args);
         //拿到该客户端应该订阅的所有topic，如何该客户端的好友、群组过多，过多的topic订阅如何处理
         List<String> topicList = new ArrayList<String>(){{
-            add("to_WithMeClient");
+            add(topic);
         }};
         //启动界面客户端
         MessageDialog.start();

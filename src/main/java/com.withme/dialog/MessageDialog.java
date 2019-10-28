@@ -15,7 +15,16 @@ import java.util.concurrent.*;
  * @author zhaobenquan
  */
 public class MessageDialog extends JFrame {
+    /**
+     * 日志
+     */
     private Logger logger = LoggerFactory.getLogger(MessageDialog.class);
+
+    /**
+     * 消息发给谁
+     * @param args
+     */
+    private static final String toTopic = "to_WithMeClient-2";
 
     private static JTextField input;
     public static Optional<JTextArea> show;
@@ -32,11 +41,11 @@ public class MessageDialog extends JFrame {
     MessageDialog(){
         //初始化消息发送线程池
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
-                .setNameFormat("MsgSend-start-thread-%d")
+                .setNameFormat("MsgSend-thread-%d")
                 .build();
         ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
                 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+                new LinkedBlockingQueue<>(10), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
         //设置组件
         setLayout(new FlowLayout());
         //页面输入组件
@@ -48,7 +57,7 @@ public class MessageDialog extends JFrame {
             //页面输入消息
             inputStr = input.getText();
             //包装消息
-            String msg = "{\"content\":\""+inputStr+"\",\"topic\":\"to_WithMeClient-2\"}";
+            String msg = "{\"content\":\""+inputStr+"\",\"topic\":\""+toTopic+"\"}";
             //消息发送给服务端
             singleThreadPool.execute(()-> SingleChannel.getInstance().channel.writeAndFlush(msg));
             logger.info("已发送消息："+msg);
