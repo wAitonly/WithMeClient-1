@@ -1,6 +1,7 @@
 package com.withme.handler.inbound;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.withme.dialog.MessageDialog;
 import com.withme.mq.ConsumerFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -46,6 +47,7 @@ public class MessageReceive {
             for(;;) {
                 records = consumer.poll(Duration.ofSeconds(1));
                 for (ConsumerRecord<String, String> record : records) {
+                    MessageDialog.showReceiveMsg(record.value());
                     logger.info("offset = "+record.offset()+", value = "+record.value());
                 }
             }
