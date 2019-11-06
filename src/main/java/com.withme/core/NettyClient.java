@@ -29,7 +29,7 @@ public class NettyClient {
     /**
      * 服务端参数
      */
-    private final String serverAddress = "127.0.0.1" ;
+    private final String serverAddress = "47.105.66.253" ;
     private final Integer serverPort = 8080 ;
 
     /**

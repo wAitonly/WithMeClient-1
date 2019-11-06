@@ -17,7 +17,7 @@ public class ConsumerFactory {
     public static KafkaConsumer<String, String> openConsumer(){
         Properties properties = new Properties();
         //xxx是服务器集群的ip
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", "47.105.66.253:9092");
         properties.put("group.id", "jd-group");
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "1000");
