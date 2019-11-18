@@ -26,6 +26,8 @@ public class ClientSwing {
         jMenuBar.add(jMenuMsg);
         jMenuBar.add(jMenuFriend);
         jFrame.setJMenuBar(jMenuBar);
+        //默认展示消息界面
+        new JMenuMsg(jFrame).show();
         //绑定导航栏监听事件
         jMenuFriend.addMouseListener(new JMenuFriend(jFrame));
         //绑定导航栏监听事件

@@ -66,6 +66,8 @@ public class JMenuMsg implements MouseListener {
         receiveArea.setLineWrap(true);
         //设置和换行不断字
         receiveArea.setWrapStyleWord(true);
+        //设置为不可选中
+        receiveArea.setEditable(false);
         sendArea.setFont(FontType.MESSAGE.getFont());
         //设置自动换行
         sendArea.setLineWrap(true);
