@@ -16,7 +16,7 @@ public enum FontType {
     /**
      * 聊天消息字体
      */
-    MESSAGE("宋体",Font.ITALIC,30);
+    MESSAGE("宋体",Font.ITALIC,20);
 
     /**
      * 字体

@@ -55,6 +55,9 @@ public class JMenuMsg implements MouseListener {
         //我的消息子面板
         //左边好友列表部分
         JPanel panelLeft = new JPanel();
+        JLabel jLabel = new JLabel("尚未开发");
+        jLabel.setFont(new Font("宋体",Font.BOLD,15));
+        panelLeft.add(jLabel);
         panelLeft.setLayout(new FlowLayout());
         //右边消息框分发送和接收消息两部分
         //两个文本域分别用于发送和接收消息
@@ -80,11 +83,11 @@ public class JMenuMsg implements MouseListener {
         JScrollPane sendPanl = new JScrollPane(sendArea);
         JSplitPane jSplitPaneRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT,receivePanl,sendPanl);
         jSplitPaneRight.setDividerSize(10);
-        jSplitPaneRight.setDividerLocation(500);
+        jSplitPaneRight.setDividerLocation(400);
         //总体分割布局
         JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,panelLeft,jSplitPaneRight);
         jSplitPane.setDividerSize(10);
-        jSplitPane.setDividerLocation(160);
+        jSplitPane.setDividerLocation(80);
         jFrame.setContentPane(jSplitPane);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setVisible(true);

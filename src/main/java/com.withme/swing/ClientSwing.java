@@ -15,7 +15,7 @@ public class ClientSwing {
     public static void start(){
         //基础面板
         JFrame jFrame = new JFrame("WithMe");
-        jFrame.setSize(800, 800);
+        jFrame.setSize(500, 600);
         jFrame.setLocation(200, 200);
         //导航栏
         JMenuBar jMenuBar = new JMenuBar();
