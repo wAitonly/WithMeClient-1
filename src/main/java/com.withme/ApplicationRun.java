@@ -1,6 +1,6 @@
 package com.withme;
 
-import com.withme.dialog.MessageDialog;
+import com.withme.swing.ClientSwing;
 import com.withme.handler.inbound.MessageReceive;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +28,7 @@ public class ApplicationRun {
             add(topic);
         }};
         //启动界面客户端
-        MessageDialog.start();
+        ClientSwing.start();
         //启动消息接收
         MessageReceive.start(topicList);
     }
