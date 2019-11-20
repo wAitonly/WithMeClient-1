@@ -83,10 +83,10 @@ public class ReceiveAreaTableRenderer implements TableCellRenderer {
                 File imageFile;
                 if(!StringUtils.isEmpty(data.getLeft())){
                     //左侧
-                    imageFile = new ClassPathResource(LEFTMSGBACK).getFile();
+                    imageFile = new ClassPathResource(RIGHTMSGBACK).getFile();
                 }else {
                     //右侧
-                    imageFile = new ClassPathResource(RIGHTMSGBACK).getFile();
+                    imageFile = new ClassPathResource(LEFTMSGBACK).getFile();
                 }
                 FileInputStream fls = new FileInputStream(imageFile);
                 byte[] imageByte = new byte[(int)imageFile.length()];
@@ -110,7 +110,6 @@ public class ReceiveAreaTableRenderer implements TableCellRenderer {
                 jTextArea.setWrapStyleWord(true);
                 jPanel = new JPanel();
                 jPanel.add(jTextArea);
-                jPanel.setOpaque(false);
             }else if(RIGHTINDEX == column && !StringUtils.isEmpty(data.getRight())){
                 //右侧头像
                 jLabel = new JLabel();
@@ -127,6 +126,9 @@ public class ReceiveAreaTableRenderer implements TableCellRenderer {
             }
         }catch (IOException e){
             logger.error("receive area set table cell style error exception for",e);
+        }
+        if(null != jPanel){
+            jPanel.setOpaque(false);
         }
         return jPanel;
     }

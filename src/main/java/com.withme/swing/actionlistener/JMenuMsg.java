@@ -80,6 +80,7 @@ public class JMenuMsg implements MouseListener {
         receiveArea.getColumnModel().getColumn(0).setCellRenderer(renderer);
         receiveArea.getColumnModel().getColumn(1).setCellRenderer(renderer);
         receiveArea.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        receiveArea.setBackground(Color.WHITE);
         //消息发送域为文本域
         JTextArea sendArea = new JTextArea();
         sendArea.setFont(FontType.MESSAGE.getFont());
@@ -91,6 +92,8 @@ public class JMenuMsg implements MouseListener {
         sendArea.addKeyListener(new SendArea(sendArea));
         //构造上下分割面板
         JScrollPane receivePanl = new JScrollPane(receiveArea);
+        //设置背景白色
+        receivePanl.getViewport().setBackground(Color.WHITE);
         JScrollPane sendPanl = new JScrollPane(sendArea);
         JSplitPane jSplitPaneRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT,receivePanl,sendPanl);
         jSplitPaneRight.setDividerSize(10);
