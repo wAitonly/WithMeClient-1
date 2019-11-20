@@ -2,6 +2,8 @@ package com.withme.swing.actionlistener;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.withme.core.SingleChannel;
+import com.withme.swing.ReceiveAreaTable;
+import com.withme.swing.ReceiveAreaTableModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -85,7 +87,7 @@ public class SendArea implements KeyListener {
             singleThreadPool.execute(()-> SingleChannel.getInstance().channel.writeAndFlush(msg));
             logger.info("已发送消息："+msg);
             //展示消息发送记录
-            JMenuMsg.receiveArea.append("me："+inputStr+"\n");
+            JMenuMsg.table.addModel(new ReceiveAreaTableModel("",inputStr,"3"));
             //情况输入文字域
             sendArea.setText("");
         }
