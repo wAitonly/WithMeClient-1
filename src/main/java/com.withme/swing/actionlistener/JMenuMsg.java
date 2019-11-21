@@ -81,6 +81,8 @@ public class JMenuMsg implements MouseListener {
         //构造上下分割面板
         JScrollPane receivePanl = new JScrollPane(receiveArea);
         JScrollPane sendPanl = new JScrollPane(sendArea);
+        //设置滚动条自动滚下
+        receivePanl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         JSplitPane jSplitPaneRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT,receivePanl,sendPanl);
         jSplitPaneRight.setDividerSize(10);
         jSplitPaneRight.setDividerLocation(400);
