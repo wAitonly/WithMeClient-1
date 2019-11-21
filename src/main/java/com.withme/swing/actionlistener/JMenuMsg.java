@@ -1,9 +1,6 @@
 package com.withme.swing.actionlistener;
 
 import com.withme.swing.FontType;
-import com.withme.swing.ReceiveAreaTable;
-import com.withme.swing.ReceiveAreaTableModel;
-import com.withme.swing.ReceiveAreaTableRenderer;
 import lombok.AllArgsConstructor;
 import javax.swing.*;
 import java.awt.*;
@@ -22,13 +19,9 @@ public class JMenuMsg implements MouseListener {
     private JFrame jFrame;
 
     /**
-     * 接收消息表格
+     * 接收消息文本域
      */
-    public static JTable receiveArea;
-    /**
-     * 接收消息数据table
-     */
-    public static ReceiveAreaTable table;
+    public static JTextArea receiveArea;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -67,22 +60,17 @@ public class JMenuMsg implements MouseListener {
         panelLeft.add(jLabel);
         panelLeft.setLayout(new FlowLayout());
         //右边消息框分发送和接收消息两部分
-        //消息接收域为表格
-        receiveArea = new JTable();
-        //设置聊天字体
-        receiveArea.setTableHeader(null);
-        table = new ReceiveAreaTable();
-        receiveArea.setModel(table);
-        //支持自定义头像
-        ReceiveAreaTableRenderer renderer = new ReceiveAreaTableRenderer("style_img/head_left.PNG","style_img/head_right.PNG");
-        //最左侧列设置渲染器
-        receiveArea.setRowHeight(60);
-        receiveArea.getColumnModel().getColumn(0).setCellRenderer(renderer);
-        receiveArea.getColumnModel().getColumn(1).setCellRenderer(renderer);
-        receiveArea.getColumnModel().getColumn(2).setCellRenderer(renderer);
-        receiveArea.setBackground(Color.WHITE);
-        //消息发送域为文本域
+        //两个文本域分别用于发送和接收消息
+        receiveArea = new JTextArea();
         JTextArea sendArea = new JTextArea();
+        //设置聊天字体
+        receiveArea.setFont(FontType.MESSAGE.getFont());
+        //设置自动换行
+        receiveArea.setLineWrap(true);
+        //设置和换行不断字
+        receiveArea.setWrapStyleWord(true);
+        //设置为不可选中
+        receiveArea.setEditable(false);
         sendArea.setFont(FontType.MESSAGE.getFont());
         //设置自动换行
         sendArea.setLineWrap(true);
@@ -92,8 +80,6 @@ public class JMenuMsg implements MouseListener {
         sendArea.addKeyListener(new SendArea(sendArea));
         //构造上下分割面板
         JScrollPane receivePanl = new JScrollPane(receiveArea);
-        //设置背景白色
-        receivePanl.getViewport().setBackground(Color.WHITE);
         JScrollPane sendPanl = new JScrollPane(sendArea);
         JSplitPane jSplitPaneRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT,receivePanl,sendPanl);
         jSplitPaneRight.setDividerSize(10);
@@ -112,6 +98,6 @@ public class JMenuMsg implements MouseListener {
      * @param msg
      */
     public static void showReceiveMsg(String msg){
-        table.addModel(new ReceiveAreaTableModel("1",msg,""));
+        receiveArea.append("other:"+msg+"\n");
     }
 }
